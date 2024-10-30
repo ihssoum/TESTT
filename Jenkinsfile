@@ -16,7 +16,7 @@ pipeline {
             steps {
                 script {
                     // Build the Docker images
-                    sh "docker-compose -f ${DOCKER_COMPOSE_FILE} build"
+                    bat "docker-compose -f ${DOCKER_COMPOSE_FILE} build"
                 }
             }
         }
@@ -24,7 +24,7 @@ pipeline {
             steps {
                 script {
                     // Start the containers
-                    sh "docker-compose -f ${DOCKER_COMPOSE_FILE} up -d"
+                    bat "docker-compose -f ${DOCKER_COMPOSE_FILE} up -d"
                 }
             }
         }
