@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+  front:
+    build:
+      context: D:\DevopsFrontBack\frontlaboo
+      dockerfile: Dockerfile
+    depends_on:
+      - back
+    ports:
+      - "4200:4200"  
+    tty: true
+
+
+  back:
+    build:
+      context: D:/DevopsFrontBack/devOPS  # Correct the path here
+      dockerfile: Dockerfile  # This refers to the Dockerfile in the 'back' folder
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/my_database?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: user
+      SPRING_DATASOURCE_PASSWORD: 123
+
+  db:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: 123
+      MYSQL_DATABASE: my_database
+      MYSQL_USER: user
+      MYSQL_PASSWORD: 123
+    ports:
+      - "3030:3306"  # Access MySQL on port 3030
+    volumes:
+      - db_data:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    environment:
+      PMA_HOST: db  # MySQL service
+      PMA_USER: root
+      PMA_PASSWORD: 123
+      PMA_ARBITRARY: 1
+    ports:
+      - "9090:80"  # Access phpMyAdmin on http://localhost:9090
+    depends_on:
+      - db
+
+volumes:
+  db_data:
