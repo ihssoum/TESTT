@@ -9,7 +9,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 // Clone your repository
-                git 'https://github.com/ihssoum/TESTT.git' // Update this URL to your repo
+                checkout scm
             }
         }
         stage('Build') {
